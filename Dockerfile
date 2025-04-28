@@ -12,6 +12,10 @@ RUN apt-get update && apt-get install -y \
 # Instala Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Instalar Xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
 # Establece directorio de trabajo
 WORKDIR /var/www/html
 
