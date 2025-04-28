@@ -6,16 +6,12 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: laravel-app
-    ports:
-      - "8000:8000"
     volumes:
       - ./src:/var/www/html
-      - ./start-container.sh:/start-container.sh
     depends_on:
       - db
     networks:
       - laravel
-    command: bash /start-container.sh
 
 
   db:
@@ -29,6 +25,19 @@ services:
       MYSQL_ROOT_PASSWORD: secret
     volumes:
       - dbdata:/var/lib/mysql
+    networks:
+      - laravel
+
+  nginx:
+    image: nginx:alpine
+    container_name: laravel-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
     networks:
       - laravel
 
