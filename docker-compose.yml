@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: laravel-app
+
     volumes:
       - ./src:/var/www/html
       - ./php-config/xdebug.ini:/usr/local/etc/php/conf.d/xdebug.ini
@@ -28,6 +29,7 @@ services:
       - dbdata:/var/lib/mysql
     networks:
       - laravel
+
 
   nginx:
     image: nginx:alpine
